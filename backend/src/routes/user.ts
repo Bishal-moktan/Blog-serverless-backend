@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { Hono } from 'hono';
 import { sign } from 'hono/jwt';
+import bcrypt from 'bcryptjs';
 
 export const userRouter = new Hono<{
   Bindings: {
@@ -11,6 +12,9 @@ export const userRouter = new Hono<{
   };
 }>();
 
+/**
+ * Sign up route
+ */
 userRouter.post('/signup', async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -37,10 +41,14 @@ userRouter.post('/signup', async (c) => {
         message: 'User already exists!',
       });
     }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(parsedInput.data.password, salt);
+
     const newUser = await prisma.user.create({
       data: {
         email: parsedInput.data.email,
-        password: parsedInput.data.password,
+        password: hashedPassword,
       },
     });
 
@@ -63,6 +71,9 @@ userRouter.post('/signup', async (c) => {
   }
 });
 
+/**
+ * Sign in route
+ */
 userRouter.post('/signin', async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -80,7 +91,6 @@ userRouter.post('/signin', async (c) => {
     const user = await prisma.user.findUnique({
       where: {
         email: parsedInput.data.email,
-        password: parsedInput.data.password,
       },
     });
 
@@ -91,6 +101,17 @@ userRouter.post('/signin', async (c) => {
       });
     }
 
+    const isCorrectPassword = await bcrypt.compare(
+      parsedInput.data.password,
+      user.password
+    );
+    console.log('PASSWORD CORRECT: ', isCorrectPassword);
+    if (!isCorrectPassword) {
+      c.status(403);
+      return c.json({
+        message: 'Invalid email or password!!',
+      });
+    }
     const jwt = await sign(
       {
         id: user.id,
