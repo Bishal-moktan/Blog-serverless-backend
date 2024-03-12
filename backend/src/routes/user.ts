@@ -121,6 +121,7 @@ userRouter.post('/signin', async (c) => {
 
     return c.json({
       token: jwt,
+      message: 'Redirecting...',
     });
   } catch (error) {
     c.status(411);
