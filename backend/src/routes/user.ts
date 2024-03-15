@@ -2,7 +2,7 @@ import { siginInput, signupInput } from '@bishalmoktan/blog-common';
 import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { Hono } from 'hono';
-import { sign } from 'hono/jwt';
+import { decode, sign, verify } from 'hono/jwt';
 import bcrypt from 'bcryptjs';
 
 export const userRouter = new Hono<{
@@ -11,6 +11,43 @@ export const userRouter = new Hono<{
     JWT_SECRET: string;
   };
 }>();
+
+/**
+ * Get user details if already logged
+ */
+userRouter.get('/userDetails', async (c) => {
+  const token = c.req.header('Authorization')?.split(' ')[1]!;
+  try {
+    const payload = await verify(token || '', c.env.JWT_SECRET);
+    if (!payload) {
+      c.status(401);
+      return c.json({
+        message: 'Unauthorized!',
+      });
+    }
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+    const userId = decode(token).payload.id;
+    console.log(userId);
+    const userDetails = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+    return c.json({ userDetails });
+  } catch (error) {
+    c.status(401);
+    return c.json({
+      message: 'Unauthorized!',
+    });
+  }
+});
 
 /**
  * Sign up route
