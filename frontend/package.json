@@ -10,9 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@bishalmoktan/blog-common": "^1.0.1",
+    "@bishalmoktan/blog-common": "^1.0.3",
+    "@editorjs/editorjs": "^2.29.0",
+    "@editorjs/header": "^2.8.1",
+    "@editorjs/list": "^1.9.0",
     "@hookform/resolvers": "^3.3.4",
     "axios": "^1.6.7",
+    "editorjs-react-renderer": "^3.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",
@@ -20,6 +24,7 @@
     "sonner": "^1.4.3"
   },
   "devDependencies": {
+    "@types/editorjs__header": "^2.6.3",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@typescript-eslint/eslint-plugin": "^7.0.2",

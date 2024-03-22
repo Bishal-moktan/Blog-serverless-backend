@@ -1,4 +1,4 @@
-import { signupInput, signupInputType } from '@bishalmoktan/blog-common';
+import { siginInput, siginInputType } from '@bishalmoktan/blog-common';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { Controller, useForm } from 'react-hook-form';
@@ -11,27 +11,26 @@ import Spinner from './Spinner';
 import { useAuth } from '../hooks';
 import { LabelledInput } from './LabelledInput';
 
-const Form = () => {
+const LoginForm = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   if (user) {
     navigate('/blogs');
   }
   const [isLoading, setIsLoading] = useState(false);
-  const form = useForm<signupInputType>({
+  const form = useForm<siginInputType>({
     defaultValues: {
       email: '',
-      name: '',
       password: '',
     },
-    resolver: zodResolver(signupInput),
+    resolver: zodResolver(siginInput),
   });
 
-  const onSubmit = async (data: signupInputType) => {
+  const onSubmit = async (data: siginInputType) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/api/v1/user/signup`,
+        `${BACKEND_URL}/api/v1/user/signin`,
         data
       );
       localStorage.setItem('token', `Bearer ${response.data.token}`);
@@ -54,28 +53,14 @@ const Form = () => {
   return (
     <div className="flex flex-1 justify-center items-center">
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-[400px]">
-        <h1 className="text-4xl font-semibold">Create an Account</h1>
+        <h1 className="text-4xl font-semibold">Login</h1>
         <p className="text-gray-500 my-4">
-          Already have an account?
-          <Link className="underline cursor-pointer pl-2" to={'/signin'}>
-            {'login'}
+          Don't have an account?
+          <Link className="underline cursor-pointer pl-2" to={`/signup`}>
+            register
           </Link>
         </p>
         <div className="flex flex-col gap-4">
-          <Controller
-            name="name"
-            control={form.control}
-            render={({ field }) => (
-              <LabelledInput
-                label="Name"
-                onChange={field.onChange}
-                type="text"
-              />
-            )}
-          />
-          <p className="text-rose-500">
-            {form.formState.errors.name && form.formState.errors.name.message}
-          </p>
           <Controller
             name="email"
             control={form.control}
@@ -109,7 +94,7 @@ const Form = () => {
             <Spinner />
           ) : (
             <button className="text-white disabled:cursor-not-allowed bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-              {'Register'}
+              {'Login'}
             </button>
           )}
         </div>
@@ -117,4 +102,4 @@ const Form = () => {
     </div>
   );
 };
-export default Form;
+export default LoginForm;

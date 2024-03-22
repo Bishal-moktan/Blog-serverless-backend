@@ -16,7 +16,7 @@ exports.signupInput = zod_1.default.object({
     password: zod_1.default.string().min(6, {
         message: 'Minimum 6 character required',
     }),
-    authorId: zod_1.default.string().optional(),
+    name: zod_1.default.string().optional(),
 });
 exports.createBlogInput = zod_1.default.object({
     title: zod_1.default.string(),

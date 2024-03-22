@@ -94,7 +94,6 @@ export const useBlogs = () => {
         setBlogs(response.data);
         setLoading(false);
       })
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .catch((err: AxiosError) => {
         setStatus(err.response?.status);
         setLoading(false);

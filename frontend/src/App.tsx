@@ -5,7 +5,7 @@ import Signup from './pages/Signup.tsx';
 import Signin from './pages/Signin.tsx';
 import { Blog } from './pages/Blog.tsx';
 import Blogs from './pages/Blogs.tsx';
-import { Publish } from './pages/Publish.tsx';
+import Publish from './pages/Publish.tsx';
 
 const router = createBrowserRouter([
   {

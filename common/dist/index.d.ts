@@ -12,15 +12,15 @@ export declare const siginInput: z.ZodObject<{
 export declare const signupInput: z.ZodObject<{
     email: z.ZodString;
     password: z.ZodString;
-    authorId: z.ZodOptional<z.ZodString>;
+    name: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     email: string;
     password: string;
-    authorId?: string | undefined;
+    name?: string | undefined;
 }, {
     email: string;
     password: string;
-    authorId?: string | undefined;
+    name?: string | undefined;
 }>;
 export declare const createBlogInput: z.ZodObject<{
     title: z.ZodString;

@@ -12,7 +12,7 @@ export const signupInput = z.object({
   password: z.string().min(6, {
     message: 'Minimum 6 character required',
   }),
-  authorId: z.string().optional(),
+  name: z.string().optional(),
 });
 
 export const createBlogInput = z.object({

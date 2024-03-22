@@ -53,10 +53,11 @@ blogRouter.post('/', async (c) => {
         message: JSON.parse(parsedInput.error.message)[0].message,
       });
     }
+    console.log(body);
     const newPost = await prisma.post.create({
       data: {
-        title: parsedInput.data.title,
-        content: parsedInput.data.content,
+        title: body.title,
+        content: body.content,
         authorId: c.get('userId'),
       },
     });

@@ -6,7 +6,7 @@ const Signup = () => {
   return (
     <div className="flex h-[100vh]">
       <Toaster richColors />
-      <Form type="signup" />
+      <Form />
       <Label />
     </div>
   );

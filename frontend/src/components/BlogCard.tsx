@@ -1,3 +1,4 @@
+import Output from 'editorjs-react-renderer';
 import { Link } from 'react-router-dom';
 interface BlogCardProps {
   authorName: string;
@@ -30,7 +31,9 @@ export const BlogCard = ({
           </div>
         </div>
         <div className="text-xl font-semibold pt-2">{title}</div>
-        <div className="text-md font-thin">{content.slice(0, 100) + '...'}</div>
+        <div className="text-md font-thin">
+          <Output data={content.slice(0, 100) + '...'}></Output>
+        </div>
         <div className="text-slate-500 text-sm font-thin pt-4">
           {`${Math.ceil(content.length / 100)} minute(s) read`}
         </div>
