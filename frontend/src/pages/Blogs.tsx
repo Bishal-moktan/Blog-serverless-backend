@@ -6,9 +6,9 @@ import { useAuth, useBlogs } from '../hooks';
 
 const Blogs = () => {
   const { loading, blogs, status: blogStatus } = useBlogs();
-  const { status: userStatus } = useAuth();
+  const { status: userStatus, user } = useAuth();
   const navigate = useNavigate();
-  if (blogStatus === 401 || userStatus === 401) {
+  if (blogStatus === 401 || userStatus === 401 || user === null) {
     navigate('/signin');
     console.log('User not found');
   }

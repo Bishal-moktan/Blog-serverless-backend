@@ -1,9 +1,10 @@
 import { Appbar } from '../components/Appbar';
 import { FullBlog } from '../components/FullBlog';
 import Spinner from '../components/Spinner';
-import { useBlog } from '../hooks';
+import { useBlog, useComment } from '../hooks';
 import { useParams } from 'react-router-dom';
 import useDocumentTitle from '../hooks/useDocumentTitle';
+import CommentSection from '../components/Comment';
 
 export const Blog = () => {
   const { id } = useParams();
@@ -11,6 +12,10 @@ export const Blog = () => {
     id: id || '',
   });
   useDocumentTitle(blog?.title || 'Blog');
+
+  const { comments } = useComment({
+    id: id || '',
+  });
 
   if (loading || !blog) {
     return (
@@ -28,6 +33,7 @@ export const Blog = () => {
   return (
     <div>
       <FullBlog blog={blog} />
+      <CommentSection comments={comments} />
     </div>
   );
 };

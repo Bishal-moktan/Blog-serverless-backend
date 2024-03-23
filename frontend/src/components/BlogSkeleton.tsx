@@ -1,4 +1,4 @@
-import { Circle } from './BlogCard';
+import { Circle } from './Avatar';
 
 export const BlogSkeleton = () => {
   return (

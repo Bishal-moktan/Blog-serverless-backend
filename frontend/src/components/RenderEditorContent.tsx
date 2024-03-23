@@ -2,7 +2,7 @@ import { OutputData } from '@editorjs/editorjs';
 
 const RenderEditorContent = ({ data }: { data: OutputData }) => {
   return (
-    <div className="editor-content">
+    <div className="editor-content space-y-2">
       {data.blocks.map((block, index) => {
         switch (block.type) {
           case 'header':
@@ -25,7 +25,6 @@ const RenderEditorContent = ({ data }: { data: OutputData }) => {
                 ))}
               </ul>
             );
-          // Handle other block types here
           default:
             return null;
         }

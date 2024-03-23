@@ -7,6 +7,7 @@ import useApp from './providers/appProvider';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import { useNavigate } from 'react-router-dom';
+import '../editor.css';
 
 const DEFAULT_INITIAL_DATA = {
   time: new Date().getTime(),

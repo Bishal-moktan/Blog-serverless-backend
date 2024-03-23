@@ -1,5 +1,6 @@
-import { Avatar } from './BlogCard';
 import { Link, useNavigate } from 'react-router-dom';
+import { Avatar } from './Avatar';
+import { useAuth } from '../hooks';
 
 export const Appbar = () => {
   const navigate = useNavigate();
@@ -7,6 +8,7 @@ export const Appbar = () => {
     localStorage.removeItem('token');
     navigate('/signin');
   };
+  const { user } = useAuth();
   return (
     <div className="border-b flex justify-between px-10 py-4">
       <Link
@@ -25,7 +27,7 @@ export const Appbar = () => {
           </button>
         </Link>
 
-        <Avatar size={'big'} name="harkirat" />
+        <Avatar size={'big'} name={user?.name || 'Anonymous'} />
         <button
           type="button"
           onClick={handleLogout}
