@@ -1,8 +1,6 @@
 import { Blog } from '../hooks';
 import { Appbar } from './Appbar';
 import { Avatar } from './BlogCard';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Output from 'editorjs-react-renderer';
 import RenderEditorContent from './RenderEditorContent';
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
