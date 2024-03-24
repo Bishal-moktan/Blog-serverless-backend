@@ -1,23 +1,28 @@
 import { Appbar } from '../components/Appbar';
 import { FullBlog } from '../components/FullBlog';
 import Spinner from '../components/Spinner';
-import { useBlog, useComment } from '../hooks';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useDocumentTitle from '../hooks/useDocumentTitle';
 import CommentSection from '../components/Comment';
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { blogSelectorFamily } from '../store/blogAtom';
+import { commentSelectorFamily } from '../store/commentAtom';
+import { userAtom } from '../store/userAtom';
 
 export const Blog = () => {
   const { id } = useParams();
-  const { loading, blog } = useBlog({
-    id: id || '',
-  });
+  const user = useRecoilValue(userAtom);
+  const navigate = useNavigate();
+  if (user === null) {
+    navigate('/signin');
+  }
+  const blog = useRecoilValue(blogSelectorFamily(id || ''));
   useDocumentTitle(blog?.title || 'Blog');
+  const commentsLoadable = useRecoilValueLoadable(
+    commentSelectorFamily(id || '')
+  );
 
-  const { comments } = useComment({
-    id: id || '',
-  });
-
-  if (loading || !blog) {
+  if (!blog) {
     return (
       <div>
         <Appbar />
@@ -30,10 +35,18 @@ export const Blog = () => {
       </div>
     );
   }
+
   return (
-    <div className="dark:bg-gray-800 ">
+    <div className="dark:bg-gray-800 min-h-screen">
       <FullBlog blog={blog} />
-      <CommentSection comments={comments} />
+      {commentsLoadable.state == 'loading' && (
+        <div className="flex justify-center items-center h-[20vh]">
+          <Spinner />
+        </div>
+      )}
+      {commentsLoadable.state == 'hasValue' && (
+        <CommentSection comments={commentsLoadable.contents} />
+      )}
     </div>
   );
 };

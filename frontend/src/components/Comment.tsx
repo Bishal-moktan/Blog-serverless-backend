@@ -1,17 +1,17 @@
 import { FormEvent, useState } from 'react';
-import { Comment } from '../hooks';
 import { Avatar } from './Avatar';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Comment } from '../store/commentAtom';
 
 const CommentSection = ({ comments }: { comments: Comment[] }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [comment, setComment] = useState('');
+
   const handleComment = async (e: FormEvent) => {
     e.preventDefault();
-
     try {
       await axios.post(
         `${BACKEND_URL}/api/v1/comment/${id}`,

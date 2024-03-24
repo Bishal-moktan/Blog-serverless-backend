@@ -50,7 +50,7 @@ export default App;
 const MainApp = () => {
   const dark = useRecoilValue(appAtom);
   return (
-    <div className={`${dark ? 'dark' : ''} min-h-screen `}>
+    <div className={`${dark ? 'dark' : ''}`}>
       <div className="dark:bg-gray-700 transition-all duration-300">
         <RouterProvider router={router} />
       </div>

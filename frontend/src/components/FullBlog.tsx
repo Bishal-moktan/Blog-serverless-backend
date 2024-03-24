@@ -1,4 +1,4 @@
-import { Blog } from '../hooks';
+import { Blog } from '../store/blogAtom';
 import { Appbar } from './Appbar';
 import { Avatar } from './Avatar';
 import RenderEditorContent from './RenderEditorContent';
@@ -13,7 +13,10 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
             <div className="text-5xl font-extrabold">{blog.title}</div>
             <div className="text-slate-500 pt-2">Post on 2nd December 2023</div>
             <div className="pt-4">
-              <RenderEditorContent data={JSON.parse(blog.content)} />
+              <RenderEditorContent
+                type="singlePage"
+                data={JSON.parse(blog.content)}
+              />
             </div>
           </div>
           <div className="col-span-4">

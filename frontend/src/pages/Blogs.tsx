@@ -2,17 +2,22 @@ import { useNavigate } from 'react-router-dom';
 import { Appbar } from '../components/Appbar';
 import { BlogCard } from '../components/BlogCard';
 import { BlogSkeleton } from '../components/BlogSkeleton';
-import { useAuth, useBlogs } from '../hooks';
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { userAtom } from '../store/userAtom';
+import { blogsAtom } from '../store/blogAtom';
+import { useEffect } from 'react';
 
 const Blogs = () => {
-  const { loading, blogs, status: blogStatus } = useBlogs();
-  const { status: userStatus, user } = useAuth();
+  const blogsLoadable = useRecoilValueLoadable(blogsAtom);
+  const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
-  if (blogStatus === 401 || userStatus === 401 || user === null) {
-    navigate('/signin');
-    console.log('User not found');
-  }
-  if (loading) {
+  useEffect(() => {
+    if (user === null) {
+      navigate('/signin');
+    }
+  }, [blogsLoadable.state]);
+
+  if (blogsLoadable.state === 'loading') {
     return (
       <div>
         <Appbar />
@@ -34,16 +39,17 @@ const Blogs = () => {
       <Appbar />
       <div className="flex justify-center">
         <div>
-          {blogs.map((blog) => (
-            <BlogCard
-              key={blog.id}
-              id={blog.id}
-              authorName={blog.author.name || 'Anonymous'}
-              title={blog.title}
-              content={blog.content}
-              publishedDate={'2nd Feb 2024'}
-            />
-          ))}
+          {blogsLoadable.state === 'hasValue' &&
+            blogsLoadable.contents.map((blog) => (
+              <BlogCard
+                key={blog.id}
+                id={blog.id}
+                authorName={blog.author.name || 'Anonymous'}
+                title={blog.title}
+                content={blog.content}
+                publishedDate={'2nd Feb 2024'}
+              />
+            ))}
         </div>
       </div>
     </div>

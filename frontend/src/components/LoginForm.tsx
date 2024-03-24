@@ -2,22 +2,17 @@ import { siginInput, siginInputType } from '@bishalmoktan/blog-common';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { Controller, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { BACKEND_URL } from '../config';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import Spinner from './Spinner';
-import { useAuth } from '../hooks';
 import { LabelledInput } from './LabelledInput';
 
 const LoginForm = () => {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  if (user) {
-    navigate('/blogs');
-  }
   const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<siginInputType>({
     defaultValues: {
       email: '',
@@ -36,7 +31,7 @@ const LoginForm = () => {
       localStorage.setItem('token', `Bearer ${response.data.token}`);
       toast.success(response.data.message);
       setTimeout(() => {
-        navigate('/blogs');
+        window.location.reload();
       }, 1000);
     } catch (error) {
       if (axios.isAxiosError(error)) {

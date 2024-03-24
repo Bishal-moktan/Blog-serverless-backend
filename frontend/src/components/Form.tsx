@@ -8,11 +8,12 @@ import { BACKEND_URL } from '../config';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import Spinner from './Spinner';
-import { useAuth } from '../hooks';
 import { LabelledInput } from './LabelledInput';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../store/userAtom';
 
 const Form = () => {
-  const { user } = useAuth();
+  const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
   if (user) {
     navigate('/blogs');

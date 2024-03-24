@@ -1,16 +1,48 @@
 import { OutputData } from '@editorjs/editorjs';
 
-const RenderEditorContent = ({ data }: { data: OutputData }) => {
+interface RenderEditorContentProps {
+  data: OutputData;
+  type: 'card' | 'singlePage';
+}
+
+const RenderEditorContent = ({ data, type }: RenderEditorContentProps) => {
   return (
     <div className="editor-content space-y-2 dark:text-white">
       {data.blocks.map((block, index) => {
         switch (block.type) {
-          case 'header':
+          case 'header': {
+            const level = block.data.level;
+            if (type == 'card') {
+              return (
+                <div key={index} className="">
+                  {block.data.text}
+                </div>
+              );
+            } else if (level == 1) {
+              return (
+                <h1 key={index} className="text-2xl font-bold ">
+                  {block.data.text}
+                </h1>
+              );
+            } else if (level == 2) {
+              return (
+                <h2 key={index} className="text-xl font-bold ">
+                  {block.data.text}
+                </h2>
+              );
+            } else if (level == 3) {
+              return (
+                <h3 key={index} className="text-lg font-bold ">
+                  {block.data.text}
+                </h3>
+              );
+            }
             return (
-              <h1 key={index} className="text-2xl font-bold ">
+              <div key={index} className="">
                 {block.data.text}
-              </h1>
+              </div>
             );
+          }
           case 'paragraph':
             return (
               <p key={index} className="text-base">

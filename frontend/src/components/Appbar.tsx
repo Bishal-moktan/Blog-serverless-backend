@@ -1,17 +1,16 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Avatar } from './Avatar';
-import { useAuth } from '../hooks';
 import { LuSun, LuMoonStar } from 'react-icons/lu';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { appAtom } from '../store/appAtom';
+import { userAtom } from '../store/userAtom';
 
 export const Appbar = () => {
-  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/signin');
+    window.location.reload();
   };
-  const { user } = useAuth();
+  const user = useRecoilValue(userAtom);
   const [dark, setDark] = useRecoilState(appAtom);
   const handleToggleMode = () => {
     setDark(!dark);
