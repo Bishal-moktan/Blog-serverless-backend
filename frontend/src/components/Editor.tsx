@@ -75,7 +75,7 @@ const Editor = () => {
     navigate(`/blog/${response.data.newPost.id}`);
   };
   return (
-    <div className="w-full md:w-[50vw] mx-auto space-y-4 mt-4">
+    <div className="w-full md:w-[50vw] mx-auto space-y-4 mt-4 dark:text-white">
       <input
         onChange={(e) => {
           setTitle(e.target.value);

@@ -32,10 +32,10 @@ const CommentSection = ({ comments }: { comments: Comment[] }) => {
     }
   };
   return (
-    <section className="max-w-screen-xl mx-auto bg-white  py-8 lg:py-16 antialiased">
+    <section className="max-w-screen-xl mx-auto   py-8 lg:py-16 antialiased">
       <div className="mx-auto px-4">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg lg:text-2xl font-bold  text-white">
+          <h2 className="text-lg lg:text-2xl font-bold  dark:text-white">
             Discussion
           </h2>
         </div>
@@ -61,21 +61,28 @@ const CommentSection = ({ comments }: { comments: Comment[] }) => {
             Post comment
           </button>
         </form>
-        <article className="p-6 text-base bg-white rounded-lg space-y-8">
+        <article className="p-6 text-base  rounded-lg space-y-8">
           {comments.map((comment) => (
-            <div key={comment.id}>
+            <div
+              key={comment.id}
+              className="bg-gray-100 dark:bg-gray-900 p-4 rounded-md"
+            >
               <footer className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-2">
-                  <div className="inline-flex items-center mr-3 text-sm font-semibold">
+                  <div className="inline-flex items-center mr-3 text-sm font-semibold ">
                     <Avatar
                       size="big"
                       name={comment.user.name || 'Anonymous'}
                     />
                   </div>
-                  {comment.user.name}
+                  <span className="dark:text-white text-lg font-semibold">
+                    {comment.user.name}
+                  </span>
                 </div>
               </footer>
-              <p className="text-gray-800">{comment.comment}</p>
+              <p className="text-gray-800 dark:text-gray-200">
+                {comment.comment}
+              </p>
             </div>
           ))}
         </article>

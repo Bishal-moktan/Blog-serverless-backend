@@ -54,8 +54,10 @@ const Form = () => {
   return (
     <div className="flex flex-1 justify-center items-center">
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-[400px]">
-        <h1 className="text-4xl font-semibold">Create an Account</h1>
-        <p className="text-gray-500 my-4">
+        <h1 className="text-4xl font-semibold dark:text-white">
+          Create an Account
+        </h1>
+        <p className="text-gray-500 my-4 dark:text-gray-300">
           Already have an account?
           <Link className="underline cursor-pointer pl-2" to={'/signin'}>
             {'login'}

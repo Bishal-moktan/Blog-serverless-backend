@@ -31,7 +31,7 @@ export const Blog = () => {
     );
   }
   return (
-    <div>
+    <div className="dark:bg-gray-800 ">
       <FullBlog blog={blog} />
       <CommentSection comments={comments} />
     </div>

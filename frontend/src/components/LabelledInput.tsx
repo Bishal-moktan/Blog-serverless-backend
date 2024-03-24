@@ -13,7 +13,7 @@ export const LabelledInput = ({
     <div>
       <label
         htmlFor={label}
-        className="block mb-2 text-sm  text-black font-semibold"
+        className="block mb-2 text-sm  text-black dark:text-white font-semibold"
       >
         {label}
       </label>

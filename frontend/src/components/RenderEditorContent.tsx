@@ -2,12 +2,12 @@ import { OutputData } from '@editorjs/editorjs';
 
 const RenderEditorContent = ({ data }: { data: OutputData }) => {
   return (
-    <div className="editor-content space-y-2">
+    <div className="editor-content space-y-2 dark:text-white">
       {data.blocks.map((block, index) => {
         switch (block.type) {
           case 'header':
             return (
-              <h1 key={index} className="text-2xl font-bold">
+              <h1 key={index} className="text-2xl font-bold ">
                 {block.data.text}
               </h1>
             );

@@ -30,7 +30,7 @@ const Blogs = () => {
   }
 
   return (
-    <div>
+    <div className="dark:bg-dark-800 min-h-screen">
       <Appbar />
       <div className="flex justify-center">
         <div>
