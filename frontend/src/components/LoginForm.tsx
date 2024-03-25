@@ -20,7 +20,6 @@ const LoginForm = () => {
     },
     resolver: zodResolver(siginInput),
   });
-
   const onSubmit = async (data: siginInputType) => {
     setIsLoading(true);
     try {
@@ -31,7 +30,7 @@ const LoginForm = () => {
       localStorage.setItem('token', `Bearer ${response.data.token}`);
       toast.success(response.data.message);
       setTimeout(() => {
-        window.location.reload();
+        window.location.replace('/');
       }, 1000);
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -38,7 +38,7 @@ const Form = () => {
       localStorage.setItem('token', `Bearer ${response.data.token}`);
       toast.success(response.data.message);
       setTimeout(() => {
-        navigate('/blogs');
+        navigate('/');
       }, 1000);
     } catch (error) {
       if (axios.isAxiosError(error)) {
