@@ -8,7 +8,7 @@ import { userAtom } from '../store/userAtom';
 export const Appbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
-    window.location.replace('/signin');
+    window.location.reload();
   };
   const user = useRecoilValue(userAtom);
   const [dark, setDark] = useRecoilState(appAtom);
